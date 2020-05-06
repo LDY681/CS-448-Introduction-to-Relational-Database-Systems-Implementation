@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="38a0c5bc-2da1-4bd0-a456-37e95ab6c808" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="vmOptionsForImporter" value="-Xmx768m" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1ZuIwbzp7jNM2VSOSrMydXY3zN2" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
+  </component>
+  <component name="RunManager" selected="Application.ROTest">
+    <configuration name="ROTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="tests.ROTest" />
+      <module name="cs448p3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in cs448p3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="cs448p3" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ROTest" />
+        <item itemvalue="JUnit.All in cs448p3" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="38a0c5bc-2da1-4bd0-a456-37e95ab6c808" name="Default Changelist" comment="" />
+      <created>1585682792145</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1585682792145</updated>
+      <workItem from="1585682797222" duration="4309000" />
+      <workItem from="1585754621351" duration="4114000" />
+      <workItem from="1585843622283" duration="4152000" />
+      <workItem from="1585849676923" duration="237000" />
+      <workItem from="1585936110130" duration="9502000" />
+      <workItem from="1586013615052" duration="10961000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="548" y="166" key="FileChooserDialogImpl" timestamp="1585849819015">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="548" y="166" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1585849819015" />
+    <state width="1491" height="222" key="GridCell.Tab.0.bottom" timestamp="1585936251091">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1491" height="222" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1585936251091" />
+    <state width="1491" height="222" key="GridCell.Tab.0.center" timestamp="1585936251091">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1491" height="222" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1585936251091" />
+    <state width="1491" height="222" key="GridCell.Tab.0.left" timestamp="1585936251091">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1491" height="222" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1585936251091" />
+    <state width="1491" height="222" key="GridCell.Tab.0.right" timestamp="1585936251091">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1491" height="222" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1585936251091" />
+    <state x="276" y="54" key="SettingsEditor" timestamp="1585849850759">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="276" y="54" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1585849850759" />
+    <state x="463" y="235" key="com.intellij.ide.util.TipDialog" timestamp="1586013627811">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="463" y="235" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1586013627811" />
+    <state x="449" y="313" width="1490" height="801" key="dock-window-1" timestamp="1585699973637">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="449" y="313" width="1490" height="801" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1585699973637" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1585683113190">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1585683113190" />
+  </component>
+</project>

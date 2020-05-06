@@ -1,0 +1,14 @@
+Group Members
+Dayu Liu: liu1589: implemented part 2&3
+Shunqiao Huang: huang953: implmented part 1
+
+Complexity Requirements:
+In my HeapFile class, I have a pageIdList, which is a list of all pageIds of pages in the heap file.
+To meet the complexity requirements stated in part2,
+I implemented pageIdList as a sorted ArrayList.
+The sorting method is in SortByFreeSpace class, which sorts pageIdList by the freeSpace from ascending order.
+So when I insert a record, I would just retrieve the last pageId in the list (The one with most free space).
+If the last page doesn't have enough free space, then I would create another page and insert there.
+This ensures O(1) for insertRecord.
+Since deleteRecord and updateRecord take rid as the parameter and simply calls corresponding method in HFPage,
+their complexity is also O(1).

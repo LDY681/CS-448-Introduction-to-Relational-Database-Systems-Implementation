@@ -1,0 +1,13 @@
+-------------------------------------------------------------------------------
+Test set: tests.ROTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.257 s <<< FAILURE! - in tests.ROTest
+testIndexScan(tests.ROTest)  Time elapsed: 0.007 s  <<< ERROR!
+java.lang.NullPointerException
+	at tests.ROTest.execute_and_compare(ROTest.java:127)
+	at tests.ROTest.testIndexScan(ROTest.java:232)
+
+tests.ROTest  Time elapsed: 0.008 s  <<< ERROR!
+java.lang.IllegalArgumentException: Page currently pinned
+	at tests.ROTest.tearDownDB(ROTest.java:212)
+

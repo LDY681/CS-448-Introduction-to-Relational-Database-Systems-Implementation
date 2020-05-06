@@ -1,0 +1,395 @@
+/*
+ * MiniSql.jjt
+ *
+ * This file contains the entire grammar for MiniSQL, the simple query
+ * language for Minibase.
+ *
+ * Based on FormsPlSql.jj by S. Ramanathan (sramji@rocketmail.com)
+ * see javacc.dev.java.net/servlets/ProjectDocumentList?folderID=110
+ *
+ * Written by Chris Mayfield for CS 448, Spring 2006, Purdue University
+ */
+
+options {
+  MULTI = true;
+  NODE_DEFAULT_VOID = true;
+  IGNORE_CASE = true;
+  STATIC = false;
+}
+
+/*****************************************************************************\
+ * Parser Class
+\*****************************************************************************/
+
+PARSER_BEGIN(MiniSql)
+package parser;
+
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import global.AttrType;
+import global.AttrOperator;
+
+@SuppressWarnings( { "unchecked", "unused", "static-access" })
+public class MiniSql {
+
+  public static void main(String args[]) throws ParseException {
+
+    MiniSql p = null;
+    if (args.length < 1) {
+
+      System.out.println("Reading from stdin.");
+      p = new MiniSql(System.in);
+
+    } else {
+
+      try {
+        p = new MiniSql(new DataInputStream(new FileInputStream(args[0])));
+        System.out.println("Reading from " + args[0]);
+      } catch (FileNotFoundException e) {
+        System.out.println(args[0] + " not found; reading from stdin.");
+        p = new MiniSql(System.in);
+      }
+
+    } // else
+
+    p.SqlStatement();
+    System.out.println("Parse Successful");
+
+  }
+
+}
+
+PARSER_END(MiniSql)
+
+/*****************************************************************************\
+ * Lexical Analysis
+\*****************************************************************************/
+
+SKIP:
+{
+  " " | "\f" | "\t" | "\r" | "\n"
+}
+
+/*
+ *  Prefix   Meaning
+ * ---------------------
+ *  K_       Keyword
+ *  O_       Operator
+ *  S_       Substitute
+ */
+
+TOKEN: /* SQL Keywords */
+{
+    < K_AND: "AND" >
+  | < K_BY: "BY" >
+  | < K_CREATE: "CREATE" >
+  | < K_DELETE: "DELETE" >
+  | < K_DESC: "DESC" >
+  | < K_DESCRIBE: "DESCRIBE" >
+  | < K_DISTINCT: "DISTINCT" >
+  | < K_DROP: "DROP" >
+  | < K_EXPLAIN: "EXPLAIN" >
+  | < K_HELP: "HELP" >
+  | < K_FLOAT: "FLOAT" >
+  | < K_FROM: "FROM" >
+  | < K_INDEX: "INDEX" >
+  | < K_INSERT: "INSERT" >
+  | < K_INTEGER: "INTEGER" >
+  | < K_INTO: "INTO" >
+  | < K_ON: "ON" >
+  | < K_OR: "OR" >
+  | < K_ORDER: "ORDER" >
+  | < K_QUIT: "QUIT" >
+  | < K_SELECT: "SELECT" >
+  | < K_SET: "SET" >
+  | < K_STRING: "STRING" >
+  | < K_STATS: "STATS" >
+  | < K_TABLE: "TABLE" >
+  | < K_UPDATE: "UPDATE" >
+  | < K_VALUES: "VALUES" >
+  | < K_WHERE: "WHERE" >
+}
+
+TOKEN: /* SQL Operators */
+{
+    < O_EQ: "=" >
+  | < O_NEQ: "<>" >
+  | < O_GT: ">" >
+  | < O_GTE: ">=" >
+  | < O_LT: "<" >
+  | < O_LTE: "<=" >
+  | < O_LPAREN: "(" >
+  | < O_RPAREN: ")" >
+  | < O_COMMA: "," >
+  | < O_SEMI: ";" >
+  | < O_STAR: "*" >
+}
+
+TOKEN: /* Numeric Constants */
+{
+  < S_INTEGER: ("-")? ( <DIGIT> )+ >
+  |
+  < #DIGIT: ["0" - "9"] >
+  |
+  < S_FLOAT: ("-")? ( <S_INTEGER> )? "." <S_INTEGER> >
+}
+
+TOKEN: /* IDs and Strings */
+{
+  < S_IDENTIFIER: ( <LETTER> )+ ( <DIGIT> | <LETTER> | <SPECIAL_CHAR> )* >
+  |
+  < #LETTER: ["a"-"z", "A"-"Z"] >
+  |
+  < #SPECIAL_CHAR: "$" | "_" >
+  |
+  < S_STRING: "'" (~["'"])* "'" ("'" (~["'"])* "'")*>
+}
+
+SPECIAL_TOKEN: /* SQL Comments */
+{
+  < LINE_COMMENT: "--"(~["\r","\n"])* >
+  |
+  < MULTI_LINE_COMMENT: "/*" (~["*"])* "*" ("*" | (~["*","/"] (~["*"])* "*"))* "/" >
+}
+
+/*****************************************************************************\
+ * Top-Level Statements
+\*****************************************************************************/
+
+AST_Start Start() #_Start : {}
+{
+  <K_HELP>
+  { jjtThis.isHelp = true; return jjtThis; }
+  |
+  <K_STATS>
+  { jjtThis.isStats = true; return jjtThis; }
+  |
+  <K_QUIT>
+  { jjtThis.isQuit = true; return jjtThis; }
+  |
+  SqlStatement() <O_SEMI>
+  { return jjtThis; }
+}
+
+void SqlStatement() : {}
+{
+  LOOKAHEAD(2) CreateTableStmt()
+  |
+  CreateIndexStmt()
+  |
+  LOOKAHEAD(2) DropTableStmt()
+  |
+  DropIndexStmt()
+  |
+  DescribeStatement()
+  |
+  InsertStatement()
+  |
+  SelectStatement()
+  |
+  UpdateStatement()
+  |
+  DeleteStatement()
+}
+
+void CreateTableStmt() #_CreateTable : {}
+{
+  <K_CREATE> <K_TABLE> <S_IDENTIFIER>
+  {jjtThis.fileName = token.image;}
+  <O_LPAREN> ColumnList() <O_RPAREN>
+}
+
+void CreateIndexStmt() #_CreateIndex : {}
+{
+  <K_CREATE> <K_INDEX> <S_IDENTIFIER>
+  {jjtThis.fileName = token.image;}
+  <K_ON> <S_IDENTIFIER>
+  {jjtThis.ixTable = token.image;}
+  <O_LPAREN> <S_IDENTIFIER> {jjtThis.ixColumn = token.image;} <O_RPAREN>
+}
+
+void DropTableStmt() #_DropTable : {}
+{
+  <K_DROP> <K_TABLE> <S_IDENTIFIER>
+  {jjtThis.fileName = token.image;}
+}
+
+void DropIndexStmt() #_DropIndex : {}
+{
+  <K_DROP> <K_INDEX> <S_IDENTIFIER>
+  {jjtThis.fileName = token.image;}
+}
+
+void DescribeStatement() #_Describe : {}
+{
+  <K_DESCRIBE> <S_IDENTIFIER>
+  {jjtThis.fileName = token.image;}
+}
+
+void InsertStatement() #_Insert : {}
+{
+  <K_INSERT> <K_INTO> <S_IDENTIFIER>
+  {jjtThis.fileName = token.image;}
+  <K_VALUES> <O_LPAREN> SqlValueExpressionList() <O_RPAREN>
+}
+
+void SelectStatement() #_Select : {}
+{
+  [<K_EXPLAIN> {jjtThis.isExplain = true;}]
+  <K_SELECT> [<K_DISTINCT> {jjtThis.isDistinct = true;}]
+  SelectClause()
+  FromClause()
+  [ WhereClause() ]
+  [ OrderByClause() ]
+}
+
+void UpdateStatement() #_Update : {}
+{
+  <K_UPDATE> <S_IDENTIFIER>
+  {jjtThis.fileName = token.image;}
+  <K_SET> ColumnValues()
+  [ WhereClause() ]
+}
+
+void DeleteStatement() #_Delete : {}
+{
+  <K_DELETE> [<K_FROM>] <S_IDENTIFIER>
+  {jjtThis.fileName = token.image;}
+  [ WhereClause() ]
+}
+
+/*****************************************************************************\
+ * Statement Clauses
+\*****************************************************************************/
+
+void ColumnList() #_IdentList : {}
+{
+  <S_IDENTIFIER> {jjtThis.names.add(token.image);}
+  ColumnType()
+
+  ( <O_COMMA>
+    <S_IDENTIFIER> {jjtThis.names.add(token.image);}
+    ColumnType() )*
+}
+
+void ColumnType() #_ColumnType : {}
+{
+  <K_INTEGER>
+  {jjtThis.type = AttrType.INTEGER;
+   jjtThis.size = 4;}
+  |
+  <K_FLOAT>
+  {jjtThis.type = AttrType.FLOAT;
+   jjtThis.size = 4;}
+  |
+  <K_STRING>
+  {jjtThis.type = AttrType.STRING;
+   jjtThis.size = 25;}
+  [ <O_LPAREN>
+    <S_INTEGER> {jjtThis.size = Integer.parseInt(token.image);}
+    <O_RPAREN> ]
+}
+
+void SelectClause() #_IdentList : {}
+{
+  <O_STAR>
+  |
+  <S_IDENTIFIER> {jjtThis.names.add(token.image);}
+  ( <O_COMMA> <S_IDENTIFIER> {jjtThis.names.add(token.image);} )*
+}
+
+void FromClause() #_IdentList : {}
+{
+  <K_FROM> <S_IDENTIFIER> {jjtThis.names.add(token.image);}
+  ( <O_COMMA> <S_IDENTIFIER> {jjtThis.names.add(token.image);} )*
+}
+
+void WhereClause() : {}
+{
+  <K_WHERE> SqlExpression()
+}
+
+void OrderByClause() #_OrderBy : {}
+{
+  <K_ORDER> <K_BY>
+
+  <S_IDENTIFIER> {jjtThis.addName(token.image);}
+  [<K_DESC> {jjtThis.setDesc();}]
+
+  ( <O_COMMA>
+    <S_IDENTIFIER> {jjtThis.addName(token.image);}
+    [<K_DESC> {jjtThis.setDesc();}] )*
+}
+
+void ColumnValues() #_IdentList : {}
+{
+  <S_IDENTIFIER>
+  {jjtThis.names.add(token.image);}
+  <O_EQ> SqlValueExpression()
+
+  ( <O_COMMA> <S_IDENTIFIER>
+    {jjtThis.names.add(token.image);}
+    <O_EQ> SqlValueExpression() )*
+}
+
+/*****************************************************************************\
+ * SQL Expressions
+\*****************************************************************************/
+
+void SqlExpression() #_OrExpr : {}
+{
+  SqlAndExpression() ( <K_OR> SqlAndExpression() )*
+}
+
+void SqlAndExpression() #_AndExpr : {}
+{
+  SqlRelationalExpression() ( <K_AND> SqlRelationalExpression() )*
+}
+
+void SqlRelationalExpression() #_ExprPred : {}
+{
+  SqlPrimaryExpression()
+
+  Relop()
+  {jjtThis.oper = AttrOperator.toValue(token.image);}
+
+  SqlPrimaryExpression()
+}
+
+void Relop() : {}
+{
+  <O_EQ> | <O_NEQ> | <O_GT> | <O_GTE> | <O_LT> | <O_LTE>
+}
+
+void SqlPrimaryExpression() #_ExprValue : {}
+{
+  <S_IDENTIFIER>
+  {jjtThis.type = AttrType.COLNAME;
+   jjtThis.value = token.image;}
+  |
+  SqlValueExpression()
+  {jjtThis.type = ((AST_ExprValue) jjtThis.children[0]).type;
+   jjtThis.value = ((AST_ExprValue) jjtThis.children[0]).value;
+   jjtThis.children = null;}
+}
+
+void SqlValueExpression() #_ExprValue : {}
+{
+  <S_INTEGER>
+  {jjtThis.type = AttrType.INTEGER;
+   jjtThis.value = new Integer(token.image);}
+  |
+  <S_FLOAT>
+  {jjtThis.type = AttrType.FLOAT;
+   jjtThis.value = new Float(token.image);}
+  |
+  <S_STRING>
+  {jjtThis.type = AttrType.STRING;
+   jjtThis.value = token.image.substring(1, token.image.length() - 1);}
+}
+
+void SqlValueExpressionList() : {}
+{
+  SqlValueExpression() ( <O_COMMA> SqlValueExpression() )*
+}

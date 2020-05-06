@@ -1,0 +1,35 @@
+{
+  "schema": [
+    {
+      "no": 0,
+      "type": "INTEGER",
+      "length": 4,
+      "name": "DriverId"
+    },
+    {
+      "no": 1,
+      "type": "STRING",
+      "length": 20,
+      "name": "FirstName"
+    },
+    {
+      "no": 2,
+      "type": "STRING",
+      "length": 20,
+      "name": "LastName"
+    },
+    {
+      "no": 3,
+      "type": "FLOAT",
+      "length": 4,
+      "name": "Age"
+    },
+    {
+      "no": 4,
+      "type": "INTEGER",
+      "length": 4,
+      "name": "NumSeats"
+    }
+  ],
+  "key": 3
+}

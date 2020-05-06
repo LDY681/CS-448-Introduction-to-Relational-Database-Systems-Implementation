@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="lib1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/__MACOSX/project4-skeleton/lib/._relop.jar!/" />
+      <root url="jar://$PROJECT_DIR$/__MACOSX/project4-skeleton/lib/._heap.jar!/" />
+      <root url="jar://$PROJECT_DIR$/__MACOSX/project4-skeleton/lib/._index.jar!/" />
+      <root url="jar://$PROJECT_DIR$/__MACOSX/project4-skeleton/lib/._bufmgr.jar!/" />
+      <root url="jar://$PROJECT_DIR$/__MACOSX/project4-skeleton/lib/._diskmgr.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

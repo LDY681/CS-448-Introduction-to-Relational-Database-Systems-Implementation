@@ -1,0 +1,17 @@
+{
+  "schema": [
+    {
+      "no": 0,
+      "type": "INTEGER",
+      "length": 4,
+      "name": "GroupId"
+    },
+    {
+      "no": 1,
+      "type": "STRING",
+      "length": 10,
+      "name": "GroupName"
+    }
+  ],
+  "key": 0
+}

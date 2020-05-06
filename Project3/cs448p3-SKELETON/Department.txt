@@ -1,0 +1,4 @@
+EmpId, Name, Age, Saidalary, DeptID
+1, Nick, 25, 900, 1
+6, John, 40, 15000, 5
+7, Josef, 32, 7000, 1

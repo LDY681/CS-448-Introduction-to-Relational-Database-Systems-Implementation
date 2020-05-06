@@ -1,0 +1,2 @@
+Before testing:
+Please delete the .minibase file and everything in bin directory and then run make

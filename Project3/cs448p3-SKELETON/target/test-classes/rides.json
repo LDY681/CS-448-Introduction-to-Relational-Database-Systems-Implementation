@@ -1,0 +1,29 @@
+{
+  "schema": [
+    {
+      "no": 0,
+      "type": "INTEGER",
+      "length": 4,
+      "name": "DriverId"
+    },
+    {
+      "no": 1,
+      "type": "INTEGER",
+      "length": 4,
+      "name": "GroupId"
+    },
+    {
+      "no": 2,
+      "type": "STRING",
+      "length": 10,
+      "name": "FromDate"
+    },
+    {
+      "no": 3,
+      "type": "STRING",
+      "length": 10,
+      "name": "ToDate"
+    }
+  ],
+  "key": 1
+}

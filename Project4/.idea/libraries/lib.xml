@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/relop.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/diskmgr.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/heap.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/index.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/bufmgr.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
